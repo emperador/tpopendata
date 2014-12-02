@@ -115,17 +115,42 @@
 
     var varChoropleth=L.choropleth(statesData, mapa_option ).on({
       click: function(e) {
-       // map.fitBounds(e.layer.getBounds());
-        alert('hola soy  jorgito= ');
+        map.fitBounds(e.layer.getBounds());
+        alert(e.layer.feature.id);
+//        alert('hola soy  jorgito= ');
+
+	var barChartData = {
+		labels : ["Matriculados","Muebles","Superficie","Densidad","Profesores"],
+		datasets : [
+			{
+				fillColor : "rgba(220,220,220,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [e.layer.feature.properties.matriculados_por_dpto,
+                                    e.layer.feature.properties.monto_muebles_por_dpto,
+                                    e.layer.feature.properties.superficie_por_dpto,
+                                    e.layer.feature.properties.density,
+                                    e.layer.feature.properties.monto_docentes_por_dpto]
+			}
+		]
+	};
         	var ctx = document.getElementById("canvas").getContext("2d");
 		window.myBar = new Chart(ctx).Bar(barChartData, {
 			responsive : true
 		});
+                
+                myBar.datasets[0].bars[0].fillColor = "green"; //bar 1
+                myBar.datasets[0].bars[1].fillColor = "orange"; //bar 2
+                myBar.datasets[0].bars[2].fillColor = "red"; //bar 3
+                myBar.datasets[0].bars[3].fillColor = "blue";
+                myBar.datasets[0].bars[4].fillColor = "black";
+                myBar.update();
 
-		var ctx2 = document.getElementById("canvas2").getContext("2d");
-		window.myBar = new Chart(ctx2).Bar(barChartData, {
-			responsive : true
-		});
+//		var ctx2 = document.getElementById("canvas2").getContext("2d");
+//		window.myBar = new Chart(ctx2).Bar(barChartData, {
+//			responsive : true
+//		});
     //    mapa_option.key='density';
 //        mapa_option.unit='density';
 //        L.Util.setOptions(varChoropleth, mapa_option);
@@ -166,49 +191,24 @@
   </script>
   <div style="width: 50%">
 			<canvas id="canvas" height="450" width="600"></canvas>
-			<canvas id="canvas2" height="450" width="600"></canvas>
+			
     </div>
     <script>
-	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+	//var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 
 	var barChartData = {
-		labels : ["January","February","March","April","May","June","July"],
+		labels : ["Matriculados","Muebles","Superficie","Densidad","Profesores"],
 		datasets : [
 			{
 				fillColor : "rgba(220,220,220,0.5)",
 				strokeColor : "rgba(220,220,220,0.8)",
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
-				data : [1,2,3,4,5,6,7]
-			},
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,0.8)",
-				highlightFill : "rgba(151,187,205,0.75)",
-				highlightStroke : "rgba(151,187,205,1)",
-				data : [7,6,5,4,3,2,1]
-			},
-			{
-				fillColor : "rgba(121,121,211,0.5)",
-				strokeColor : "rgba(151,187,205,0.8)",
-				highlightFill : "rgba(151,187,205,0.75)",
-				highlightStroke : "rgba(151,187,205,1)",
-				data : [2,2,2,2,2,2,2]
+				data : [1,2,3,4,5]
 			}
 		]
-
-	}
-	window.onload = function(){
-//		var ctx = document.getElementById("canvas").getContext("2d");
-//		window.myBar = new Chart(ctx).Bar(barChartData, {
-//			responsive : true
-//		});
-//
-//		var ctx2 = document.getElementById("canvas2").getContext("2d");
-//		window.myBar = new Chart(ctx2).Bar(barChartData, {
-//			responsive : true
-//		});
-	}
+	};
+	
 
 	</script>
 </body>
