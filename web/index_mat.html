@@ -81,7 +81,7 @@
   <script src="js/L.Choropleth.js"></script>    
   <script src="js/py-dptos.js"></script> 
   <script>
-    var map = L.map('map',{maxZoom: 6,minZoom: 6}).setView([-23.5, -58.5], 6);
+    var map = L.map('map',{maxZoom: 9,minZoom: 6}).setView([-23.5, -58.5], 6);
 
     var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
@@ -93,7 +93,7 @@
       name: 'Paraguay, Superficie por Departamento',
       unit: 'matriculados por departamento',
       key: 'matriculados_por_dpto',
-      classBreaks: [0, 25000, 50000, 100000, 150000, 200000, 250000, 300000],
+      classBreaks: [0, 25000, 50000, 100000, 150000, 200000, 250000, 350000],
       colors: ['#ffdccc','#ffb899','#ff9566','#ff7133','#cc3e00','#992f00', '#661f00', '#331000'],
       normalStyle: {
         weight: 2,
