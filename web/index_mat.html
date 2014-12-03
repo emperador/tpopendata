@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Choropleth - Leaflet</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="css/leaflet.css" />
+  <script src="js/chart/Chart.js"></script>
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" /><![endif]-->
+  <style>
+
+    #map {
+      width: 610px;
+      height: 500px;
+    }
+
+    .leaflet-legend, .leaflet-label {
+      background: white;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);      
+      border-radius: 5px;   
+      font: 14px/16px Arial, Helvetica, sans-serif;       
+    }
+
+    .leaflet-legend {
+      text-align: left;
+      line-height: 18px;
+      color: #555;
+      z-index: 6;
+      width: 110px;         
+      padding: 6px 8px;
+    }
+
+    .leaflet-legend h4 {
+      margin: 0 0 5px 5;
+      color: #777;
+      text-align: center;
+    }
+
+    .leaflet-legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 0.7;
+    }
+
+    .leaflet-label {
+      display: block;
+      padding: 6px;
+      position: absolute;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+      white-space: nowrap;
+      z-index: 8;
+      margin-top: 35px;
+    }
+
+    .legend {
+    	line-height: 18px;
+    	color: #555;
+    }
+
+    .legend i {
+    	width: 18px;
+    	height: 18px;
+    	float: left;
+    	margin-right: 10px;
+    	opacity: 0.7;
+    }
+
+  </style>
+</head>
+<body>
+    <button onclick="location.href='index_doc.html'">matriculados</button><button>docentes</button><button>superficie</button><button>muebles</button>
+
+  <div id="map"></div>
+  <script src="js/leaflet.js"></script> 
+  <script src="js/leaflet.label.js"></script>      
+  <script src="js/L.Choropleth.js"></script>    
+  <script src="js/py-dptos.js"></script> 
+  <script>
+    var map = L.map('map',{maxZoom: 9,minZoom: 6}).setView([-23.5, -58.5], 6);
+
+    var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+      key: 'BC9A493B41014CAABB98F0471D759707',
+      styleId: 22677
+    }).addTo(map);
+    
+    var mapa_option={
+      name: 'Paraguay, Superficie por Departamento',
+      unit: 'matriculados por departamento',
+      key: 'matriculados_por_dpto',
+      classBreaks: [0, 25000, 50000, 100000, 150000, 200000, 250000, 350000],
+      colors: ['#ffdccc','#ffb899','#ff9566','#ff7133','#cc3e00','#992f00', '#661f00', '#331000'],
+      normalStyle: {
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+      },
+      highlightStyle: {
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+      },
+      onEachFeature: function(feature, layer) {
+        layer.bindLabel(this.featureLabel(feature)).addTo(map);
+      }
+    };
+
+    var varChoropleth=L.choropleth(statesData, mapa_option ).on({
+      click: function(e) {
+        map.fitBounds(e.layer.getBounds());
+        alert(e.layer.feature.id);
+//        alert('hola soy  jorgito= ');
+
+	var barChartData = {
+		labels : ["Matriculados","Muebles","Superficie","Densidad","Profesores"],
+		datasets : [
+			{
+				fillColor : "rgba(220,220,220,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [e.layer.feature.properties.matriculados_por_dpto,
+                                    e.layer.feature.properties.monto_muebles_por_dpto,
+                                    e.layer.feature.properties.superficie_por_dpto,
+                                    e.layer.feature.properties.density,
+                                    e.layer.feature.properties.monto_docentes_por_dpto]
+			}
+		]
+	};
+        	var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			responsive : true
+		});
+                
+                myBar.datasets[0].bars[0].fillColor = "green"; //bar 1
+                myBar.datasets[0].bars[1].fillColor = "orange"; //bar 2
+                myBar.datasets[0].bars[2].fillColor = "red"; //bar 3
+                myBar.datasets[0].bars[3].fillColor = "blue";
+                myBar.datasets[0].bars[4].fillColor = "black";
+                myBar.update();
+
+//		var ctx2 = document.getElementById("canvas2").getContext("2d");
+//		window.myBar = new Chart(ctx2).Bar(barChartData, {
+//			responsive : true
+//		});
+    //    mapa_option.key='density';
+//        mapa_option.unit='density';
+//        L.Util.setOptions(varChoropleth, mapa_option);
+//        varChoropleth.addTo(map);
+          
+      }
+    });
+    
+    varChoropleth.addTo(map);
+
+    var legend = L.control({position: 'bottomleft'});
+    legend.onAdd = function (map) {
+    	var div = L.DomUtil.create('div', 'info legend'),
+    	    grades = [0, 25000, 50000, 100000, 150000, 200000, 250000, 300000],
+    	    labels = ['0',  '25.000', '50.000', '100.000', '150.000', '200.000', '250.000', '300.000'];
+    	// loop through our density intervals and generate a label with a colored square for each interval
+    	for (var i = 0; i < grades.length; i++) {
+    	    div.innerHTML +=
+    	        '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+    	        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    	}
+    	return div;
+    };
+    legend.addTo(map);
+   
+    function getColor(d) {
+    	return d > 300000 ? '#331000' : 
+           d > 250000  ? '#661f00' :
+           d > 200000  ? '#992f00' :
+           d > 150000  ? '#cc3e00' :
+           d > 100000   ? '#ff7133' :
+           d > 20000   ? '#ff9566' :
+           d > 25000   ? '#ffb899' :
+                      '#ffdccc';
+    }
+//colors: ['#ffdccc','#ffb899','#ff9566','#ff7133','#cc3e00','#992f00', '#661f00', '#331000'],
+
+  </script>
+  <div style="width: 50%">
+			<canvas id="canvas" height="450" width="600"></canvas>
+			
+    </div>
+    <script>
+	//var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+
+	var barChartData = {
+		labels : ["Matriculados","Muebles","Superficie","Densidad","Profesores"],
+		datasets : [
+			{
+				fillColor : "rgba(220,220,220,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [1,2,3,4,5]
+			}
+		]
+	};
+	
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Choropleth - Leaflet</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="css/leaflet.css" />
+  <script src="js/chart/Chart.js"></script>
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" /><![endif]-->
+  
+</head>
+<body>
+    <button onclick="location.href='index_doc.html'">matriculados</button><button>docentes</button><button>superficie</button><button>muebles</button>
+	
+		<div id="canvas-holder">
+			<canvas id="chart-area" width="500" height="500"/>
+		</div>
+
+
+	<script>
+
+		var pieData = [
+				{
+					value: 0.11,
+					color:"#556B2F",
+					highlight: "#312f2f",
+					label: "Alto Paraguay"
+				},
+				{
+					value: 2.03,
+					color: "#46BFBD",
+					highlight: "#312f2f",
+					label: "Amambay"
+				},
+				{
+					value: 5.77,
+					color: "#FDB45C",
+					highlight: "#312f2f",
+					label: "Alto Parana"
+				},
+				{
+					value: 0.13,
+					color: "maroon",
+					highlight: "#312f2f",
+					label: "Boquerón"
+				},
+				{
+					value: 10.89,
+					color: "#FFD700",
+					highlight: "#312f2f",
+					label: "Caaguazú"
+				},
+				{
+					value: 10.09,
+					color: "blue",
+					highlight: "#312f2f",
+					label: "Caazapá",
+				},
+				{
+					value: 5.07,
+					color: "purple",
+					highlight: "#312f2f",
+					label: "Canindeyú"
+				},
+				{
+					value: 1.52,
+					color: "green",
+					highlight: "#312f2f",
+					label: "Capital"
+				},
+				{
+					value: 6.43,
+					color: "red",
+					highlight: "#312f2f",
+					label: "Central"
+				},
+				{
+					value: 6.06,
+					color: "silver",
+					highlight: "#312f2f",
+					label: "Concepción"
+				},
+				{
+					value: 7.32,
+					color: "lime",
+					highlight: "#312f2f",
+					label: "Cordillera"
+				},
+				{
+					value: 3.59,
+					color: "teal",
+					highlight: "#312f2f",
+					label: "Guairá"
+				},
+				{
+					value: 15.68,
+					color: "fuchsia",
+					highlight: "#312f2f",
+					label: "Itapúa"
+				},
+				{
+					value: 2.59,
+					color: "#9370DB",
+					highlight: "#312f2f",
+					label: "Misiones"
+				},
+				{
+					value: 2.03,
+					color: "#FFB6C1",
+					highlight: "#312f2f",
+					label: "Ñeembucú"
+				},
+                                {
+					value: 8.78,
+					color: "#8FBC8F",
+					highlight: "#312f2f",
+					label: "Paraguarí"
+				},		
+                                {
+					value: 1.04,
+					color: "#EEE8AA",
+					highlight: "#312f2f",
+					label: "Presidente Hayes"
+				},	
+                                {
+					value: 10.89,
+					color: "#949FB1",
+					highlight: "#312f2f",
+					label: "San Pedro"
+				}
+			];
+
+			window.onload = function(){
+				var ctx = document.getElementById("chart-area").getContext("2d");
+				window.myPie = new Chart(ctx).Pie(pieData);
+                                holder = document.getElementById('canvas-holder');
+                                holder.onclick = function(evt){
+                                    var activePoints = window.myPie.getSegmentsAtEvent(evt);
+                                    console.log(activePoints);
+                                    alert(activePoints[0].label);
+                                }
+			};
+
+
+
+	</script>
+
+
+
+</body>
+</html>
