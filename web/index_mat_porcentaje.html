@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Choropleth - Leaflet</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="css/leaflet.css" />
+  <script src="js/chart/Chart.js"></script>
+  <script src="js/py-dptos.js"></script>
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" /><![endif]-->
+  
+</head>
+<body>
+    <button onclick="location.href='index_doc_porcentaje.html'">matriculados</button><button onclick="location.href='index_doc_porcentaje.html'">docentes</button><button>superficie</button><button>muebles</button>
+		<div id="canvas-holder">
+			<canvas id="chart-area" width="500" height="500"/>
+		</div>
+    
+    <div style="width: 50%" id="holder">
+			<canvas id="canvas" height="450" width="600"></canvas>
+			
+    </div>
+
+
+	<script>
+
+		var pieData = [
+				{
+					value: 0.31,
+					color:"#556B2F",
+					highlight: "#312f2f",
+					label: "Alto Paraguay"
+				},
+				{
+					value: 2.53,
+					color: "#46BFBD",
+					highlight: "#312f2f",
+					label: "Amambay"
+				},
+				{
+					value: 11.95,
+					color: "#FDB45C",
+					highlight: "#312f2f",
+					label: "Alto Parana"
+				},
+				{
+					value: 0.51,
+					color: "maroon",
+					highlight: "#312f2f",
+					label: "Boquerón"
+				},
+				{
+					value: 9.50,
+					color: "#FFD700",
+					highlight: "#312f2f",
+					label: "Caaguazú"
+				},
+				{
+					value: 3.49,
+					color: "blue",
+					highlight: "#312f2f",
+					label: "Caazapá"
+				},
+				{
+					value: 4.19,
+					color: "purple",
+					highlight: "#312f2f",
+					label: "Canindeyú"
+				},
+				{
+					value: 5.52,
+					color: "green",
+					highlight: "#312f2f",
+					label: "Capital"
+				},
+				{
+					value: 23.9,
+					color: "red",
+					highlight: "#312f2f",
+					label: "Central"
+				},
+				{
+					value: 4.19,
+					color: "silver",
+					highlight: "#312f2f",
+					label: "Concepción"
+				},
+				{
+					value: 4.96,
+					color: "lime",
+					highlight: "#312f2f",
+					label: "Cordillera"
+				},
+				{
+					value: 3.47,
+					color: "teal",
+					highlight: "#312f2f",
+					label: "Guairá"
+				},
+				{
+					value: 8.0,
+					color: "fuchsia",
+					highlight: "#312f2f",
+					label: "Itapúa"
+				},
+				{
+					value: 2.08,
+					color: "#9370DB",
+					highlight: "#312f2f",
+					label: "Misiones"
+				},
+				{
+					value: 1.19,
+					color: "#FFB6C1",
+					highlight: "#312f2f",
+					label: "Ñeembucú"
+				},
+                                {
+					value: 4.05,
+					color: "#8FBC8F",
+					highlight: "#312f2f",
+					label: "Paraguarí"
+				},		
+                                {
+					value: 1.57,
+					color: "#EEE8AA",
+					highlight: "#312f2f",
+					label: "Presidente Hayes"
+				},	
+                                {
+					value: 8.59,
+					color: "#949FB1",
+					highlight: "#312f2f",
+					label: "San Pedro"
+				}
+			];
+
+			window.onload = function(){
+				var ctx = document.getElementById("chart-area").getContext("2d");
+				window.myPie = new Chart(ctx).Pie(pieData);
+                                holder = document.getElementById('canvas-holder');
+                                holder.onclick = function(evt){
+                                    var activePoints = window.myPie.getSegmentsAtEvent(evt);
+                                    
+                                    var indice= activePoints[0].label==="Alto Paraguay" ? 0:
+                                    activePoints[0].label==="Amambay"? 2:
+                                    activePoints[0].label==="Alto Parana"? 1:
+                                    activePoints[0].label==="Boquerón"? 4:
+                                    activePoints[0].label==="Caaguazú"? 5:
+                                    activePoints[0].label==="Caazapá"? 6:
+                                    activePoints[0].label==="Canindeyú"? 7:
+                                    activePoints[0].label==="Capital"? 3:
+                                    activePoints[0].label==="Central"? 8:
+                                    activePoints[0].label==="Concepción"? 9:
+                                    activePoints[0].label==="Cordillera"? 10:
+                                    activePoints[0].label==="Guairá"? 11:
+                                    activePoints[0].label==="Itapúa"? 12:
+                                    activePoints[0].label==="Misiones"? 13:
+                                    activePoints[0].label==="Ñeembucú"? 17:
+                                    activePoints[0].label==="Paraguarí"? 14:
+                                    activePoints[0].label==="Presidente Hayes"? 15:
+                                    activePoints[0].label==="San Pedro"? 16:
+                                    3;
+                            var barChartData = {
+		labels : ["Matriculados","Muebles","Superficie","Profesores"],
+		datasets : [
+			{
+				fillColor : "rgba(220,220,220,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [statesData.features[indice].properties.matriculados_por_dpto/1307150*100,
+                                    statesData.features[indice].properties.monto_muebles_por_dpto/267612132980*100,
+                                    statesData.features[indice].properties.superficie_por_dpto/33615710*100,
+                                    statesData.features[indice].properties.monto_docentes_por_dpto/55153*100]
+			}
+		]
+	};
+                
+                var oldcanv = document.getElementById('canvas');
+                var holder=document.getElementById('holder');
+                holder.removeChild(oldcanv);
+
+                var canv = document.createElement('canvas');
+                canv.id = 'canvas';
+                canv.height="450";
+                canv.width="600";
+                holder.appendChild(canv);
+                
+                
+        	var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			responsive : false
+		});
+                
+                myBar.datasets[0].bars[0].fillColor = "green"; //bar 1
+                myBar.datasets[0].bars[0].highlightFill="#312f2f";
+                myBar.datasets[0].bars[1].fillColor = "orange"; //bar 2
+                myBar.datasets[0].bars[1].highlightFill="#312f2f";
+                myBar.datasets[0].bars[2].fillColor = "red"; //bar 3
+                myBar.datasets[0].bars[2].highlightFill="#312f2f";
+                myBar.datasets[0].bars[3].fillColor = "blue";
+                myBar.datasets[0].bars[3].highlightFill="#312f2f";
+                myBar.update();
+                                    
+                                };
+                                
+                                
+                         var barChartData = {
+		labels : ["Matriculados","Muebles","Superficie","Profesores"],
+		datasets : [
+			{
+				fillColor : "rgba(220,220,220,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [statesData.features[3].properties.matriculados_por_dpto/1307150*100,
+                                    statesData.features[3].properties.monto_muebles_por_dpto/267612132980*100,
+                                    statesData.features[3].properties.superficie_por_dpto/33615710*100,
+                                    statesData.features[3].properties.monto_docentes_por_dpto/55153*100]
+			}
+		]
+	};
+                
+                var oldcanv = document.getElementById('canvas');
+                var holder=document.getElementById('holder');
+                holder.removeChild(oldcanv);
+
+                var canv = document.createElement('canvas');
+                canv.id = 'canvas';
+                canv.height="450";
+                canv.width="600";
+                holder.appendChild(canv);
+                
+                
+        	var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			responsive : false
+		});
+                
+                myBar.datasets[0].bars[0].fillColor = "green"; //bar 1
+                myBar.datasets[0].bars[0].highlightFill="#312f2f";
+                myBar.datasets[0].bars[1].fillColor = "orange"; //bar 2
+                myBar.datasets[0].bars[1].highlightFill="#312f2f";
+                myBar.datasets[0].bars[2].fillColor = "red"; //bar 3
+                myBar.datasets[0].bars[2].highlightFill="#312f2f";
+                myBar.datasets[0].bars[3].fillColor = "blue";
+                myBar.datasets[0].bars[3].highlightFill="#312f2f";
+                myBar.update();
+			};
+
+
+
+	</script>
+
+
+
+</body>
+</html>
