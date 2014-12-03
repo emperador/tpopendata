@@ -7,7 +7,9 @@
   <script src="js/chart/Chart.js"></script>
   <script src="js/py-dptos.js"></script>
   <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" /><![endif]-->
-  
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+  <script src="js/bootstrap.min.js" type="text/javascript"></script>  
 </head>
 <body>
     <button onclick="location.href='index_doc_porcentaje.html'">matriculados</button><button onclick="location.href='index_doc_porcentaje.html'">docentes</button><button>superficie</button><button>muebles</button>
@@ -169,8 +171,8 @@
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
 				data : [statesData.features[indice].properties.matriculados_por_dpto/1307150*100,
-                                    statesData.features[indice].properties.monto_muebles_por_dpto/267612132980*100,
-                                    statesData.features[indice].properties.superficie_por_dpto/33615710*100,
+                                    statesData.features[indice].properties.monto_muebles_por_dpto/267605*100,
+                                    statesData.features[indice].properties.superficie_por_dpto/40583*100,
                                     statesData.features[indice].properties.monto_docentes_por_dpto/55153*100]
 			}
 		]
@@ -214,8 +216,8 @@
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
 				data : [statesData.features[3].properties.matriculados_por_dpto/1307150*100,
-                                    statesData.features[3].properties.monto_muebles_por_dpto/267612132980*100,
-                                    statesData.features[3].properties.superficie_por_dpto/33615710*100,
+                                    statesData.features[3].properties.monto_muebles_por_dpto/267605*100,
+                                    statesData.features[3].properties.superficie_por_dpto/40583*100,
                                     statesData.features[3].properties.monto_docentes_por_dpto/55153*100]
 			}
 		]
