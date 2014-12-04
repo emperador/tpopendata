@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Choropleth - Leaflet</title>
+  <title>TP Open Data Final</title>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="css/leaflet.css" />
   <script src="js/chart/Chart.js"></script>
@@ -81,10 +81,10 @@
   <div class="row">
   <div class="col-md-5" style=" margin-left: 20px">
     <div class="row">
-    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 275px">números</button>    <button onclick="location.href='index_matriculados_porcentaje.html'" class="btn btn-danger" style=" width: 275px">porcentajes</button>
+    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 275px">números</button>    <button onclick="location.href='index_matriculados_porcentaje.html'" class="btn btn-success" style=" width: 275px">porcentajes</button>
     </div>
     <div class="row">
-    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 138px">matriculados</button><button onclick="location.href='index_docentes.html'" class="btn btn-info" style=" width: 137px">docentes</button><button onclick="location.href='index_superficie.html'" class="btn btn-info" style=" width: 138px">superficie</button ><button onclick="location.href='index_muebles.html'" class="btn btn-info" style=" width: 137px">muebles</button>
+    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 138px">matriculados</button><button onclick="location.href='index_muebles.html'" class="btn btn-info" style=" width: 137px">muebles</button><button onclick="location.href='index_superficie.html'" class="btn btn-info" style=" width: 138px">superficie</button ><button onclick="location.href='index_docentes.html'" class="btn btn-info" style=" width: 137px">docentes</button>
     </div>
     <div class="row">
     <div id="map"></div>
@@ -100,7 +100,7 @@
       unit: 'matriculados por departamento',
       key: 'matriculados_por_dpto',
       classBreaks: [0, 25000, 50000, 100000, 150000, 200000, 250000, 350000],
-      colors: ['#ffdccc','#ffb899','#ff9566','#ff7133','#cc3e00','#992f00', '#661f00', '#331000'],
+      colors: ['#97b496','#6cc96a','#42c63f','#21a01d','#10700e','#084e06', '#043803', '#011e01'],
       normalStyle: {
         weight: 2,
         opacity: 1,
@@ -124,9 +124,9 @@
         //map.fitBounds(e.layer.getBounds());
         //alert(e.layer.feature.id);
 //        alert('hola soy  jorgito= ');
-        $('#estado').text(e.layer.feature.properties.name);
+        $('#estado').text("Porcentaje sobre el total: "+e.layer.feature.properties.name);
 	var barChartData = {
-		labels : ["Matriculados","Muebles","Superficie","Profesores"],
+		labels : ["Matriculados","Muebles","Superficie","Docentes"],
 		datasets : [
 			{
 				fillColor : "rgba(220,220,220,0.5)",
@@ -188,14 +188,15 @@
     legend.addTo(map);
    
     function getColor(d) {
-    	return d > 300000 ? '#331000' : 
-           d > 250000  ? '#661f00' :
-           d > 200000  ? '#992f00' :
-           d > 150000  ? '#cc3e00' :
-           d > 100000   ? '#ff7133' :
-           d > 20000   ? '#ff9566' :
-           d > 25000   ? '#ffb899' :
-                      '#ffdccc';
+        //'#97b496','#6cc96a','#42c63f','#21a01d','#10700e','#084e06', '#043803', '#011e01'
+    	return d > 300000 ? '#011e01' : 
+           d > 250000  ? '#043803' :
+           d > 200000  ? '#084e06' :
+           d > 150000  ? '#10700e' :
+           d > 100000   ? '#21a01d' :
+           d > 20000   ? '#42c63f':
+           d > 25000   ? '#6cc96a' :
+                      '#97b496';
     }
 //colors: ['#ffdccc','#ffb899','#ff9566','#ff7133','#cc3e00','#992f00', '#661f00', '#331000'],
 
@@ -205,7 +206,7 @@
  <div class="col-md-5" style=" margin-left: 40px; ">
      <div class="row">
           
-                    <label id="estado" style=" margin-left: 280px; margin-right: auto; margin-top: 30px;height: 100%; text-align: center; font-size: 25px;">Asunción</label>
+<label id="estado" style=" margin-left: 80px; margin-right: auto; margin-top: 30px;height: 100%; width: 100%;text-align: center; font-size: 25px;">Porcentaje sobre el total: Asunción</label>
 
       </div>
  <div style="width: 50%" id="holder">
@@ -217,7 +218,7 @@
   <script>
 	window.onload = function(){
             var barChartData = {
-		labels : ["Matriculados","Muebles","Superficie","Profesores"],
+		labels : ["Matriculados","Muebles","Superficie","Docentes"],
 		datasets : [
 			{
 				fillColor : "rgba(220,220,220,0.5)",

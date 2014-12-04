@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Choropleth - Leaflet</title>
+  <title>TP Open Data Final</title>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="css/leaflet.css" />
   <script src="js/chart/Chart.js"></script>
@@ -83,10 +83,10 @@
     <div class="row">
     <div class="col-md-5" style=" margin-left: 20px">
     <div class="row">
-    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 275px">números</button>    <button onclick="location.href='index_matriculados_porcentaje.html'" class="btn btn-danger" style=" width: 275px">porcentajes</button>
+    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 275px">números</button>    <button onclick="location.href='index_matriculados_porcentaje.html'" class="btn btn-success" style=" width: 275px">porcentajes</button>
     </div>
     <div class="row">
-    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 138px">matriculados</button><button onclick="location.href='index_docentes.html'" class="btn btn-info" style=" width: 137px">docentes</button><button onclick="location.href='index_superficie.html'" class="btn btn-info" style=" width: 138px">superficie</button ><button onclick="location.href='index_muebles.html'" class="btn btn-info" style=" width: 137px">muebles</button>
+    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 138px">matriculados</button><button onclick="location.href='index_muebles.html'" class="btn btn-info" style=" width: 137px">muebles</button><button onclick="location.href='index_superficie.html'" class="btn btn-info" style=" width: 138px">superficie</button ><button onclick="location.href='index_docentes.html'" class="btn btn-info" style=" width: 137px">docentes</button>
     </div>
     <div class="row">
   <div id="map"></div>
@@ -128,9 +128,9 @@
         //map.fitBounds(e.layer.getBounds());
         //alert(e.layer.feature.id);
 //        alert('hola soy  jorgito= ');
-        $('#estado').text(e.layer.feature.properties.name);
+        $('#estado').text("Porcentaje sobre el total: "+e.layer.feature.properties.name);
 	var barChartData = {
-		labels : ["Matriculados","Muebles","Superficie","Profesores"],
+		labels : ["Matriculados","Muebles","Superficie","Docentes"],
 		datasets : [
 			{
 				fillColor : "rgba(220,220,220,0.5)",
@@ -209,7 +209,7 @@
  <div class="col-md-5" style=" margin-left: 40px;">
      <div class="row">
           
-          <label id="estado" style=" margin-left: 280px; margin-right: auto; margin-top: 30px;height: 100%; text-align: center; font-size: 25px;">Asunción</label>
+<label id="estado" style=" margin-left: 80px; margin-right: auto; margin-top: 30px;height: 100%; width: 100%;text-align: center; font-size: 25px;">Porcentaje sobre el total: Asunción</label>
           
       </div>
      <div style="width: 50%" id="holder">
@@ -221,7 +221,7 @@
   <script>
 	window.onload = function(){
             var barChartData = {
-		labels : ["Matriculados","Muebles","Superficie","Profesores"],
+		labels : ["Matriculados","Muebles","Superficie","Docentes"],
 		datasets : [
 			{
 				fillColor : "rgba(220,220,220,0.5)",
