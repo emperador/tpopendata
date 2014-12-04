@@ -10,7 +10,10 @@
   <script src="js/jquery-1.11.1.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css" />
   <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" href="css/introjs.min.css" />
   <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="js/intro.min.js"></script>
+  <script type="text/javascript" src="js/myintro.js"></script>
   <style>
 
     #map {
@@ -78,15 +81,54 @@
   </style>
 </head>
 <body>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" id="id1">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Distribucion de Recusos:</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" >
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="index_matriculados.html">Visualizacion</a></li>
+            <li><a href="#about">Datos</a></li>
+            <li><a href="#contact">Acerca de</a></li>
+            <li><a href="https://github.com/emperador/tpopendata">Source:github</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><img id="cc-by" src="images/cc-by-sa-logo.png" alt="Open Data" style=" margin-top: 10px"></li>
+            <li><img id="opendata" src="images/od-logo.png" alt="Open Data" style=" margin-top: 10px"></li>
+           
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
   <div class="row">
   <div class="col-md-5" style=" margin-left: 20px">
-    <div class="row">
-    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 275px">números</button>    <button onclick="location.href='index_matriculados_porcentaje.html'" class="btn btn-success" style=" width: 275px">porcentajes</button>
-    </div>
-    <div class="row">
+<!--    <div class="row">
+    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 280px">números</button>    <button onclick="location.href='index_matriculados_porcentaje.html'" class="btn btn-success" style=" width: 280px; margin-left: 10px">porcentajes</button>
+    </div>-->
+    <!--div class="row">
     <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 138px">matriculados</button><button onclick="location.href='index_muebles.html'" class="btn btn-info" style=" width: 137px">muebles</button><button onclick="location.href='index_superficie.html'" class="btn btn-info" style=" width: 138px">superficie</button ><button onclick="location.href='index_docentes.html'" class="btn btn-info" style=" width: 137px">docentes</button>
+    </div-->
+    <div class="row" style=" margin-top: 0px">
+        <label style=" font-size: 20px; margin-left: 10px">Numeros:</label>
+        <select onClick="window.location.href=this.value" id="numeros" class="btn btn-info" style="margin-left: 0px">
+            <option value="index_matriculados.html">matriculados</option>
+            <option value="index_muebles.html">muebles</option>
+            <option value="index_superficie.html">superficie</option>
+            <option value="index_docentes.html">docentes</option>
+        </select>
+        <label style=" font-size: 20px">Porcentajes:</label>
+        <select onClick="window.location.href=this.value" id="porcentajes" class="btn btn-success" style="margin-left: 0px">
+            <option value="index_matriculados_porcentaje.html">matriculados</option>
+            <option value="index_muebles_porcentaje.html">muebles</option>
+            <option value="index_superficie_porcentaje.html">superficie</option>
+            <option value="index_doc_porcentaje.html">docentes</option>
+        </select>
+        
     </div>
     <div class="row">
+        <h3>Cantidad de matriculados por departamento</h3>
     <div id="map"></div>
   <script src="js/leaflet.js"></script> 
   <script src="js/leaflet.label.js"></script>      
@@ -94,7 +136,7 @@
   <script src="js/py-dptos.js"></script> 
   <script>
     var map = L.map('map',{maxZoom: 8,minZoom: 6}).setView([-23.5, -58.5], 6);
-
+    
     var mapa_option={
       name: 'Paraguay, Cantidad de Matriculados por Departamento',
       unit: 'matriculados por departamento',
@@ -124,6 +166,15 @@
         //map.fitBounds(e.layer.getBounds());
         //alert(e.layer.feature.id);
 //        alert('hola soy  jorgito= ');
+        var trunc_matriculados=e.layer.feature.properties.matriculados_por_dpto/1307150*100;
+        trunc_matriculados=trunc_matriculados.toFixed(2);
+        var trunc_muebles=e.layer.feature.properties.monto_muebles_por_dpto/267605*100;
+        trunc_muebles=trunc_muebles.toFixed(2);
+        var trunc_superficie=e.layer.feature.properties.superficie_por_dpto/40583*100;
+        trunc_superficie=trunc_superficie.toFixed(2);
+        var trunc_docentes=e.layer.feature.properties.monto_docentes_por_dpto/55153*100;
+        trunc_docentes=trunc_docentes.toFixed(2);
+        
         $('#estado').text("Porcentaje sobre el total: "+e.layer.feature.properties.name);
 	var barChartData = {
 		labels : ["Matriculados","Muebles","Superficie","Docentes"],
@@ -133,10 +184,10 @@
 				strokeColor : "rgba(220,220,220,0.8)",
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
-				data : [e.layer.feature.properties.matriculados_por_dpto/1307150*100,
-                                    e.layer.feature.properties.monto_muebles_por_dpto/267605*100,
-                                    e.layer.feature.properties.superficie_por_dpto/40583*100,
-                                    e.layer.feature.properties.monto_docentes_por_dpto/55153*100]
+				data : [trunc_matriculados,
+                                    trunc_muebles,
+                                    trunc_superficie,
+                                    trunc_docentes]
 			}
 		]
 	};
@@ -171,7 +222,7 @@
     });
     
     varChoropleth.addTo(map);
-
+    
     var legend = L.control({position: 'bottomleft'});
     legend.onAdd = function (map) {
     	var div = L.DomUtil.create('div', 'info legend'),
@@ -186,7 +237,7 @@
     	return div;
     };
     legend.addTo(map);
-   
+    
     function getColor(d) {
         //'#97b496','#6cc96a','#42c63f','#21a01d','#10700e','#084e06', '#043803', '#011e01'
     	return d > 300000 ? '#011e01' : 
@@ -199,15 +250,31 @@
                       '#97b496';
     }
 //colors: ['#ffdccc','#ffb899','#ff9566','#ff7133','#cc3e00','#992f00', '#661f00', '#331000'],
+//function my_button_onClick() {
+//    
+//}
+//    var myButtonOptions = {
+//      'text': 'MyButton',  // string
+//      'iconUrl': '',  // string
+//      'onClick': my_button_onClick,  // callback function
+//      'hideText': true,  // bool
+//      'maxWidth': 30,  // number
+//      'doToggle': false,  // bool
+//      'toggleStatus': false  // bool
+//} ;  
+//new L.control.button(myButtonOptions).addTo(map);
 
   </script>
   </div>
  </div>
- <div class="col-md-5" style=" margin-left: 40px; ">
+ <div id="barras" class="col-md-5" style=" margin-left: 40px; ">
      <div class="row">
           
-<label id="estado" style=" margin-left: 80px; margin-right: auto; margin-top: 30px;height: 100%; width: 100%;text-align: center; font-size: 25px;">Porcentaje sobre el total: Asunción</label>
-
+<label id="estado" style=" margin-left: 40px; margin-right: auto; margin-top: 0px;height: 100%; width: 100%;text-align: center; font-size: 25px;">Porcentaje sobre el total: Asunción</label>
+<p style=" margin-left: 40px; margin-right: auto; font-size: 9px">Los datos del grafico
+    representan los porcentajes correspondientes a un departamento sobre el total de: matriculados(cantidad de alumnos matriculados)
+    , muebles(monto invertido en muebles), superficie(superficie en metros cuadrados disponible para inmueble)
+    ,docentes(monto invertido en funcionarios docentes)</p>
       </div>
  <div style="width: 50%" id="holder">
 			<canvas id="canvas" height="500" width="600"></canvas>
@@ -216,7 +283,20 @@
   
   
   <script>
+          
+        
+        
+      
 	window.onload = function(){
+            var trunc_matriculadosini=statesData.features[3].properties.matriculados_por_dpto/1307150*100;
+            trunc_matriculadosini=trunc_matriculadosini.toFixed(2);
+            var trunc_mueblesini=statesData.features[3].properties.monto_muebles_por_dpto/267605*100;
+            trunc_mueblesini=trunc_mueblesini.toFixed(2);
+            var trunc_superficieini=statesData.features[3].properties.superficie_por_dpto/40583*100;
+            trunc_superficieini=trunc_superficieini.toFixed(2);
+            var trunc_docentesini=statesData.features[3].properties.monto_docentes_por_dpto/55153*100;
+            trunc_docentesini=trunc_docentesini.toFixed(2);
+            
             var barChartData = {
 		labels : ["Matriculados","Muebles","Superficie","Docentes"],
 		datasets : [
@@ -225,10 +305,10 @@
 				strokeColor : "rgba(220,220,220,0.8)",
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
-				data : [statesData.features[3].properties.matriculados_por_dpto/1307150*100,
-                                    statesData.features[3].properties.monto_muebles_por_dpto/267605*100,
-                                    statesData.features[3].properties.superficie_por_dpto/40583*100,
-                                    statesData.features[3].properties.monto_docentes_por_dpto/55153*100]
+				data : [trunc_matriculadosini,
+                                    trunc_mueblesini,
+                                    trunc_superficieini,
+                                    trunc_docentesini]
 			}
 		]
 	};
@@ -261,12 +341,46 @@
             
             
             
-
-
-	}
-
+                var introguide = introJs();
+        
+        
+        introguide.setOptions({
+            steps: [
+                {
+                     element: '#id1',
+                     intro: 'Barra de navegacion, permite acceder a la visualizacion, un documento explicando el origen de los datos, informacion sobre el proyecto y los datos abiertos y el codigo fuente de la aplicacion'
+                },
+                {
+                    element: '#numeros',
+                    intro: 'Con un click se puede seleccionar que datos mostrar por estado en el mapa del paraguay'
+                },
+                {
+                   element:'#porcentajes' ,
+                   intro: 'Con un click se puede seleccionar que datos mostrar por estado en un grafico de torta'
+                },
+                {
+                    element:'#map' ,
+                    intro: 'Permite mostrar la informacion del Paraguay dividia en departamentos, la informacion puede ser: <br>Matriculados(la cantidad de alumnos matriculados)<br>Muebles(el monto en millones de guaranies invertido en muebles)<br>Superficie(la superficie de los establecimientos en miles metros cuadrados)<br>Docentes(el monto en millones de guaranies invertido en salario de funcionarios docentes)',
+                    position: 'right'
+                },
+                {
+                    element:'#barras' ,
+                    intro: 'Muestra toda la informacion disponible(Matriculados, Muebles, Superficie y Docentes) de un departamento en porcentaje',
+                    position: 'left'
+                }
+                
+                
+            ]
+        });
+                introguide.start();
+	};
+        
+        
+     
 	</script>
   </div>
 </div>
+    
+    
 </body>
 </html>

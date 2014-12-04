@@ -19,9 +19,21 @@
     <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 275px">números</button>    <button onclick="location.href='index_matriculados_porcentaje.html'" class="btn btn-success" style=" width: 275px">porcentajes</button>
     </div>
     <div class="row">
-    <button onclick="location.href='index_matriculados_porcentaje.html'" class="btn btn-success" style=" width: 138px">matriculados</button><button onclick="location.href='index_muebles_porcentaje.html'" class="btn btn-success" style=" width: 137px">muebles</button><button onclick="location.href='index_superficie_porcentaje.html'" class="btn btn-success" style=" width: 138px">superficie</button ><button onclick="location.href='index_doc_porcentaje.html'" class="btn btn-success" style=" width: 137px">docentes</button>
-    </div>
+        <select onClick="window.location.href=this.value" id="numeros" class="btn btn-info" style="margin-left: 80px">
+            <option value="index_matriculados.html">matriculados</option>
+            <option value="index_muebles.html">muebles</option>
+            <option value="index_superficie.html">superficie</option>
+            <option value="index_docentes.html">docentes</option>
+        </select>
+        <select onClick="window.location.href=this.value" id="numeros" class="btn btn-success" style="margin-left: 150px">
+            <option value="index_matriculados_porcentaje.html">matriculados</option>
+            <option value="index_muebles_porcentaje.html">muebles</option>
+            <option value="index_superficie_porcentaje.html">superficie</option>
+            <option value="index_doc_porcentaje.html">docentes</option>
+        </select>
+            </div>
     <div class="row">
+        <h3>Porcentaje de superficie por departamento</h3>
 		<div id="canvas-holder">
 			<canvas id="chart-area" width="500" height="500"/>
 		</div>
