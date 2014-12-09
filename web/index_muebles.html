@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>TP Open Data Final</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
   <meta charset="utf-8" />
   <link rel="stylesheet" href="css/leaflet.css" />
   <script src="js/chart/Chart.js"></script>
@@ -107,8 +108,8 @@
     <div class="row" style=" margin-top: 0px">
         <label style=" font-size: 20px; margin-left: 10px">Numeros:</label>
         <select onClick="window.location.href=this.value" id="numeros" class="btn btn-info" style="margin-left: 0px">
+            <option value="index_muebles.html">MUEBLES</option>
             <option value="index_matriculados.html">matriculados</option>
-            <option value="index_muebles.html">muebles</option>
             <option value="index_superficie.html">superficie</option>
             <option value="index_docentes.html">docentes</option>
         </select>
@@ -161,6 +162,14 @@
         //map.fitBounds(e.layer.getBounds());
         //alert(e.layer.feature.id);
 //        alert('hola soy  jorgito= ');
+        var trunc_matriculados=e.layer.feature.properties.matriculados_por_dpto/1307150*100;
+        trunc_matriculados=trunc_matriculados.toFixed(2);
+        var trunc_muebles=e.layer.feature.properties.monto_muebles_por_dpto/267605*100;
+        trunc_muebles=trunc_muebles.toFixed(2);
+        var trunc_superficie=e.layer.feature.properties.superficie_por_dpto/40583*100;
+        trunc_superficie=trunc_superficie.toFixed(2);
+        var trunc_docentes=e.layer.feature.properties.monto_docentes_por_dpto/59497*100;
+        trunc_docentes=trunc_docentes.toFixed(2);
         $('#estado').text("Porcentaje sobre el total: "+e.layer.feature.properties.name);
 	var barChartData = {
 		labels : ["Matriculados","Muebles","Superficie","Docentes"],
@@ -170,11 +179,11 @@
 				strokeColor : "rgba(220,220,220,0.8)",
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
-				data : [e.layer.feature.properties.matriculados_por_dpto/1307150*100,
-                                    e.layer.feature.properties.monto_muebles_por_dpto/267605*100,
-                                    e.layer.feature.properties.superficie_por_dpto/40583*100,
-                                    e.layer.feature.properties.monto_docentes_por_dpto/59497*100]
-			}
+				data : [trunc_matriculados,
+                                    trunc_muebles,
+                                    trunc_superficie,
+                                    trunc_docentes]
+                }
 		]
 	};
                 
@@ -218,7 +227,7 @@
     	for (var i = 0; i < grades.length; i++) {
     	    div.innerHTML +=
     	        '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-    	        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    	        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' millones de Gs. <br>' : '+ millones de Gs.');
     	}
     	return div;
     };

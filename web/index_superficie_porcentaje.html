@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>TP Open Data Final</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
   <meta charset="utf-8" />
   <link rel="stylesheet" href="css/leaflet.css" />
   <script src="js/py-dptos.js"></script>
@@ -115,9 +116,9 @@
         </select>
         <label style=" font-size: 20px">Porcentajes:</label>
         <select onClick="window.location.href=this.value" id="porcentajes" class="btn btn-success" style="margin-left: 0px">
+            <option value="index_superficie_porcentaje.html">SUPERFICIE</option>
             <option value="index_matriculados_porcentaje.html">matriculados</option>
             <option value="index_muebles_porcentaje.html">muebles</option>
-            <option value="index_superficie_porcentaje.html">superficie</option>
             <option value="index_doc_porcentaje.html">docentes</option>
         </select>
         
@@ -284,6 +285,16 @@
                                     activePoints[0].label==="Presidente Hayes"? 15:
                                     activePoints[0].label==="San Pedro"? 16:
                                     3;
+
+                        var trunc_matriculados=statesData.features[indice].properties.matriculados_por_dpto/1307150*100;
+                        trunc_matriculados=trunc_matriculados.toFixed(2);
+                        var trunc_muebles=statesData.features[indice].properties.monto_muebles_por_dpto/267605*100;
+                        trunc_muebles=trunc_muebles.toFixed(2);
+                        var trunc_superficie=statesData.features[indice].properties.superficie_por_dpto/40583*100;
+                        trunc_superficie=trunc_superficie.toFixed(2);
+                        var trunc_docentes=statesData.features[indice].properties.monto_docentes_por_dpto/59497*100;
+                        trunc_docentes=trunc_docentes.toFixed(2);
+
                             var barChartData = {
 		labels : ["Matriculados","Muebles","Superficie","Docentes"],
 		datasets : [
@@ -292,10 +303,10 @@
 				strokeColor : "rgba(220,220,220,0.8)",
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
-				data : [statesData.features[indice].properties.matriculados_por_dpto/1307150*100,
-                                    statesData.features[indice].properties.monto_muebles_por_dpto/267605*100,
-                                    statesData.features[indice].properties.superficie_por_dpto/40583*100,
-                                    statesData.features[indice].properties.monto_docentes_por_dpto/59497*100]
+				data : [trunc_matriculados,
+                                    trunc_muebles,
+                                    trunc_superficie,
+                                    trunc_docentes]
 			}
 		]
 	};
@@ -327,7 +338,15 @@
                 myBar.update();
                                     
                                 };
-                                
+                        var trunc_matriculadosini=statesData.features[3].properties.matriculados_por_dpto/1307150*100;
+                        trunc_matriculadosini=trunc_matriculadosini.toFixed(2);
+                        var trunc_mueblesini=statesData.features[3].properties.monto_muebles_por_dpto/267605*100;
+                        trunc_mueblesini=trunc_mueblesini.toFixed(2);
+                        var trunc_superficieini=statesData.features[3].properties.superficie_por_dpto/40583*100;
+                        trunc_superficieini=trunc_superficieini.toFixed(2);
+                        var trunc_docentesini=statesData.features[3].properties.monto_docentes_por_dpto/59497*100;
+                        trunc_docentesini=trunc_docentesini.toFixed(2);
+
                                var barChartData = {
 		labels : ["Matriculados","Muebles","Superficie","Docentes"],
 		datasets : [
@@ -336,10 +355,10 @@
 				strokeColor : "rgba(220,220,220,0.8)",
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
-				data : [statesData.features[3].properties.matriculados_por_dpto/1307150*100,
-                                    statesData.features[3].properties.monto_muebles_por_dpto/267605*100,
-                                    statesData.features[3].properties.superficie_por_dpto/40583*100,
-                                    statesData.features[3].properties.monto_docentes_por_dpto/59497*100]
+				data : [trunc_matriculadosini,
+                                    trunc_mueblesini,
+                                    trunc_superficieini,
+                                    trunc_docentesini]
 			}
 		]
 	};

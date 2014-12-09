@@ -3,6 +3,7 @@
 <html>
 <head>
   <title>TP Open Data Final</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
   <meta charset="utf-8" />
   <link rel="stylesheet" href="css/leaflet.css" />
   <script src="js/chart/Chart.js"></script>
@@ -117,7 +118,7 @@
     <div class="row" style=" margin-top: 0px">
         <label style=" font-size: 20px; margin-left: 10px">Numeros:</label>
         <select onClick="window.location.href=this.value" id="numeros" class="btn btn-info" style="margin-left: 0px">
-            <option value="index_matriculados.html">matriculados</option>
+            <option value="index_matriculados.html">MATRICULADOS</option>
             <option value="index_muebles.html">muebles</option>
             <option value="index_superficie.html">superficie</option>
             <option value="index_docentes.html">docentes</option>
@@ -236,7 +237,7 @@
     	for (var i = 0; i < grades.length; i++) {
     	    div.innerHTML +=
     	        '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-    	        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    	        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' matriculados <br>' : '+');
     	}
     	return div;
     };
