@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="css/introjs.min.css" />
   <script src="js/bootstrap.min.js" type="text/javascript"></script>
   <script type="text/javascript" src="js/intro.min.js"></script>
-  <script type="text/javascript" src="js/myintro.js"></script>
+  
   <style>
 
     #map {
@@ -81,6 +81,9 @@
   </style>
 </head>
 <body>
+<!--    <script>
+        var introguide = introJs();
+    </script>-->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" id="id1">
       <div class="container">
         <div class="navbar-header">
@@ -89,9 +92,10 @@
         <div id="navbar" class="navbar-collapse collapse" >
           <ul class="nav navbar-nav">
             <li class="active"><a href="index_matriculados.html">Visualizacion</a></li>
-            <li><a href="#about">Datos</a></li>
-            <li><a href="#contact">Acerca de</a></li>
+            <li><a href="datos.html">Datos</a></li>
+            <li><a href="about.html">Acerca de</a></li>
             <li><a href="https://github.com/emperador/tpopendata">Source:github</a></li>
+            <li> <button id="guia" onClick="introguide.start()" style=" margin-top: 10px">Guia del Sitio</button></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><img id="cc-by" src="images/cc-by-sa-logo.png" alt="Open Data" style=" margin-top: 10px"></li>
@@ -172,7 +176,7 @@
         trunc_muebles=trunc_muebles.toFixed(2);
         var trunc_superficie=e.layer.feature.properties.superficie_por_dpto/40583*100;
         trunc_superficie=trunc_superficie.toFixed(2);
-        var trunc_docentes=e.layer.feature.properties.monto_docentes_por_dpto/55153*100;
+        var trunc_docentes=e.layer.feature.properties.monto_docentes_por_dpto/59497*100;
         trunc_docentes=trunc_docentes.toFixed(2);
         
         $('#estado').text("Porcentaje sobre el total: "+e.layer.feature.properties.name);
@@ -294,7 +298,7 @@
             trunc_mueblesini=trunc_mueblesini.toFixed(2);
             var trunc_superficieini=statesData.features[3].properties.superficie_por_dpto/40583*100;
             trunc_superficieini=trunc_superficieini.toFixed(2);
-            var trunc_docentesini=statesData.features[3].properties.monto_docentes_por_dpto/55153*100;
+            var trunc_docentesini=statesData.features[3].properties.monto_docentes_por_dpto/59497*100;
             trunc_docentesini=trunc_docentesini.toFixed(2);
             
             var barChartData = {
@@ -312,17 +316,7 @@
 			}
 		]
 	};
-                
-//                var oldcanv = document.getElementById('canvas');
-//                var holder=document.getElementById('holder');
-//                holder.removeChild(oldcanv);
-//
-//                var canv = document.createElement('canvas');
-//                canv.id = 'canvas';
-//                canv.height="500";
-//                canv.width="600";
-//                holder.appendChild(canv);
-                
+                       
                 
         	var ctx = document.getElementById("canvas").getContext("2d");
 		window.myBar = new Chart(ctx).Bar(barChartData, {
@@ -337,43 +331,9 @@
                 myBar.datasets[0].bars[2].highlightFill="#312f2f";
                 myBar.datasets[0].bars[3].fillColor = "blue";
                 myBar.datasets[0].bars[3].highlightFill="#312f2f";
-                myBar.update(); 
-            
-            
-            
-                var introguide = introJs();
-        
-        
-        introguide.setOptions({
-            steps: [
-                {
-                     element: '#id1',
-                     intro: 'Barra de navegacion, permite acceder a la visualizacion, un documento explicando el origen de los datos, informacion sobre el proyecto y los datos abiertos y el codigo fuente de la aplicacion'
-                },
-                {
-                    element: '#numeros',
-                    intro: 'Con un click se puede seleccionar que datos mostrar por estado en el mapa del paraguay'
-                },
-                {
-                   element:'#porcentajes' ,
-                   intro: 'Con un click se puede seleccionar que datos mostrar por estado en un grafico de torta'
-                },
-                {
-                    element:'#map' ,
-                    intro: 'Permite mostrar la informacion del Paraguay dividia en departamentos, la informacion puede ser: <br>Matriculados(la cantidad de alumnos matriculados)<br>Muebles(el monto en millones de guaranies invertido en muebles)<br>Superficie(la superficie de los establecimientos en miles metros cuadrados)<br>Docentes(el monto en millones de guaranies invertido en salario de funcionarios docentes)',
-                    position: 'right'
-                },
-                {
-                    element:'#barras' ,
-                    intro: 'Muestra toda la informacion disponible(Matriculados, Muebles, Superficie y Docentes) de un departamento en porcentaje',
-                    position: 'left'
-                }
-                
-                
-            ]
-        });
-                introguide.start();
+                myBar.update();             
 	};
+        
         
         
      
@@ -381,6 +341,6 @@
   </div>
 </div>
     
-    
+    <script type="text/javascript" src="js/myintro.js"></script>
 </body>
 </html>

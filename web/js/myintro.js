@@ -18,11 +18,13 @@
                 },
                 {
                     element:'#map' ,
-                    intro: 'Permite mostrar la informacion del Paraguay dividia en departamentos, la informacion puede ser: <br>Matriculados(la cantidad de alumnos matriculados)<br>Muebles(el monto en millones de guaranies invertido en muebles)<br>Superficie(la superficie de los establecimientos en miles metros cuadrados)<br>Docentes(el monto en millones de guaranies invertido en salario de funcionarios docentes)'
+                    intro: 'Permite mostrar la informacion del Paraguay dividia en departamentos, la informacion puede ser: <br>Matriculados(la cantidad de alumnos matriculados)<br>Muebles(el monto en millones de guaranies invertido en muebles)<br>Superficie(la superficie de los establecimientos en miles metros cuadrados)<br>Docentes(el monto en millones de guaranies invertido en salario de funcionarios docentes)',
+                    position: 'right'
                 },
                 {
-                    element:'#barra' ,
-                    intro: 'Muestra toda la informacion disponible(Matriculados, Muebles, Superficie y Docentes) de un departamento en porcentaje'
+                    element:'#barras' ,
+                    intro: 'Muestra toda la informacion disponible(Matriculados, Muebles, Superficie y Docentes) de un departamento en porcentaje',
+                    position: 'left'
                 }
                 
                 

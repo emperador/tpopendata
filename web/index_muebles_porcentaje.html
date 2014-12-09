@@ -4,35 +4,123 @@
   <title>TP Open Data Final</title>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="css/leaflet.css" />
-  <script src="js/chart/Chart.js"></script>
-  <script src="js/jquery-1.11.1.min.js"></script>
-
-  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" /><![endif]-->
   <script src="js/py-dptos.js"></script>
+  <script src="js/chart/Chart.js"></script>
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" /><![endif]-->
+  <script src="js/jquery-1.11.1.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css" />
   <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" href="css/introjs.min.css" />
   <script src="js/bootstrap.min.js" type="text/javascript"></script>
-</head>
+  <script type="text/javascript" src="js/intro.min.js"></script>
+  
+  <style>
+
+    #map {
+      width: 610px;
+      height: 500px;
+    }
+
+    .leaflet-legend, .leaflet-label {
+      background: white;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);      
+      border-radius: 5px;   
+      font: 14px/16px Arial, Helvetica, sans-serif;       
+    }
+
+    .leaflet-legend {
+      text-align: left;
+      line-height: 18px;
+      color: #555;
+      z-index: 6;
+      width: 110px;         
+      padding: 6px 8px;
+    }
+
+    .leaflet-legend h4 {
+      margin: 0 0 5px 5;
+      color: #777;
+      text-align: center;
+    }
+
+    .leaflet-legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 0.7;
+    }
+
+    .leaflet-label {
+      display: block;
+      padding: 6px;
+      position: absolute;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+      white-space: nowrap;
+      z-index: 8;
+      margin-top: 35px;
+    }
+
+    .legend {
+    	line-height: 18px;
+    	color: #555;
+    }
+
+    .legend i {
+    	width: 18px;
+    	height: 18px;
+    	float: left;
+    	margin-right: 10px;
+    	opacity: 0.7;
+    }
+
+  </style>
 <body>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" id="id1">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Distribucion de Recusos:</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" >
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="index_matriculados.html">Visualizacion</a></li>
+            <li><a href="datos.html">Datos</a></li>
+            <li><a href="about.html">Acerca de</a></li>
+            <li><a href="https://github.com/emperador/tpopendata">Source:github</a></li>
+            <li> <button id="guia" onClick="introguide.start()" style=" margin-top: 10px">Guia del Sitio</button></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><img id="cc-by" src="images/cc-by-sa-logo.png" alt="Open Data" style=" margin-top: 10px"></li>
+            <li><img id="opendata" src="images/od-logo.png" alt="Open Data" style=" margin-top: 10px"></li>
+           
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
     <div class="row">
   <div class="col-md-5" style=" margin-left: 20px">
-    <div class="row">
-    <button onclick="location.href='index_matriculados.html'" class="btn btn-info" style=" width: 275px">números</button>    <button onclick="location.href='index_matriculados_porcentaje.html'" class="btn btn-success" style=" width: 275px">porcentajes</button>
-    </div>
-    <div class="row">
-        <select onClick="window.location.href=this.value" id="numeros" class="btn btn-info" style="margin-left: 80px">
+    
+    <div class="row" style=" margin-top: 0px">
+        <label style=" font-size: 20px; margin-left: 10px">Numeros:</label>
+        <select onClick="window.location.href=this.value" id="numeros" class="btn btn-info" style="margin-left: 0px">
             <option value="index_matriculados.html">matriculados</option>
             <option value="index_muebles.html">muebles</option>
             <option value="index_superficie.html">superficie</option>
             <option value="index_docentes.html">docentes</option>
         </select>
-        <select onClick="window.location.href=this.value" id="numeros" class="btn btn-success" style="margin-left: 150px">
+        <label style=" font-size: 20px">Porcentajes:</label>
+        <select onClick="window.location.href=this.value" id="porcentajes" class="btn btn-success" style="margin-left: 0px">
             <option value="index_matriculados_porcentaje.html">matriculados</option>
             <option value="index_muebles_porcentaje.html">muebles</option>
             <option value="index_superficie_porcentaje.html">superficie</option>
             <option value="index_doc_porcentaje.html">docentes</option>
         </select>
-            </div>
+        
+    </div>
     <div class="row">
         <h3>Porcentaje de Montos asignados a docentes por departamento</h3>
         <div id="canvas-holder">
@@ -41,15 +129,17 @@
         </div>
     </div>
         
-    <div class="col-md-5" style=" margin-left: 40px">
-      <div class="row">
+    <div id="barras" class="col-md-5" style=" margin-left: 40px; ">
+     <div class="row">
           
-                    <label id="estado" style=" margin-left: 80px; margin-right: auto; margin-top: 30px;height: 100%; width: 100%;text-align: center; font-size: 25px;">Porcentaje sobre el total: Asunción</label>
-
+<label id="estado" style=" margin-left: 40px; margin-right: auto; margin-top: 0px;height: 100%; width: 100%;text-align: center; font-size: 25px;">Porcentaje sobre el total: Asunción</label>
+<p style=" margin-left: 40px; margin-right: auto; font-size: 9px">Los datos del grafico
+    representan los porcentajes correspondientes a un departamento sobre el total de: matriculados(cantidad de alumnos matriculados)
+    , muebles(monto invertido en muebles), superficie(superficie en metros cuadrados disponible para inmueble)
+    ,docentes(monto invertido en funcionarios docentes)</p>
       </div>
-    
-    <div style="width: 50%" id="holder">
-			<canvas id="canvas" height="450" width="600"></canvas>
+ <div style="width: 50%" id="holder">
+			<canvas id="canvas" height="500" width="600"></canvas>
 			
     </div>
 
@@ -204,7 +294,7 @@
 				data : [statesData.features[indice].properties.matriculados_por_dpto/1307150*100,
                                     statesData.features[indice].properties.monto_muebles_por_dpto/267605*100,
                                     statesData.features[indice].properties.superficie_por_dpto/40583*100,
-                                    statesData.features[indice].properties.monto_docentes_por_dpto/55153*100]
+                                    statesData.features[indice].properties.monto_docentes_por_dpto/59497*100]
 			}
 		]
 	};
@@ -248,7 +338,7 @@
 				data : [statesData.features[3].properties.matriculados_por_dpto/1307150*100,
                                     statesData.features[3].properties.monto_muebles_por_dpto/267605*100,
                                     statesData.features[3].properties.superficie_por_dpto/40583*100,
-                                    statesData.features[3].properties.monto_docentes_por_dpto/55153*100]
+                                    statesData.features[3].properties.monto_docentes_por_dpto/59497*100]
 			}
 		]
 	};
@@ -286,6 +376,6 @@
 
 </div>
 </div>
-
+<script type="text/javascript" src="js/myintro.js"></script>
 </body>
 </html>
